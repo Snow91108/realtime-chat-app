@@ -1,0 +1,114 @@
+/* ===== LIGHT CLEAN AUTH THEME ===== */
+
+.auth-bg {
+  min-height: 100vh;
+  background: #f5f7fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+}
+
+.auth-card {
+  background: #ffffff;
+  width: 360px;
+  padding: 40px 30px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.auth-title {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 28px;
+  color: #111;
+}
+
+/* ===== INPUTS (FIXED OVERFLOW ISSUE) ===== */
+
+.input-box {
+  margin-bottom: 18px;
+  width: 100%;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 30px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 14px;
+  background: #f9f9f9;
+  color: #000;
+  box-sizing: border-box;
+}
+
+.input-box input:focus {
+  border-color: #000;
+  background: #fff;
+}
+
+/* ===== BUTTONS ===== */
+
+.auth-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 30px;
+  border: none;
+  background: #000;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.auth-btn:hover {
+  background: #222;
+}
+
+.logout-btn {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 10px 26px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+/* ===== TEXT ===== */
+
+.forgot {
+  text-align: right;
+  font-size: 12px;
+  color: #444;
+  cursor: pointer;
+  margin-bottom: 18px;
+}
+
+.link-text {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #444;
+}
+
+.link-text a {
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.error-text {
+  color: red;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* ===== HOME ===== */
+
+.home-text {
+  font-size: 18px;
+  margin-bottom: 18px;
+  color: #111;
+}
