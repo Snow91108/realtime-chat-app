@@ -1,11 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
-const Login = ({ onSwitch }) => {
+const Login = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -13,45 +17,37 @@ const Login = ({ onSwitch }) => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    const res = await API.post("/auth/login", formData);
+    try {
+      const res = await API.post("/auth/login", formData);
 
-    console.log("✅ LOGIN RESPONSE:", res.data);
+      const apiUser = res.data.user;
+      const token = res.data.token;
 
-    const token = res.data.token;
+      const user = {
+        _id: apiUser._id || apiUser.id,
+        name: apiUser.name,
+        email: apiUser.email,
+      };
 
-    // ✅ FIX: Handle BOTH id & _id safely
-    const apiUser = res.data.user;
+      if (!token || !user._id) {
+        alert("Invalid server response");
+        return;
+      }
 
-    const user = {
-      _id: apiUser._id || apiUser.id,  // ✅ THIS IS THE CRITICAL FIX
-      name: apiUser.name,
-      email: apiUser.email,
-    };
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
 
-    // ✅ HARD VALIDATION
-    if (!token || !user._id || !user.name) {
-      console.error("❌ Invalid login response structure:", res.data);
-      alert("Login failed due to invalid server response.");
-      return;
+      alert("Login successful!");
+      navigate("/chat");
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed");
     }
 
-    // ✅ SAVE PROPERLY
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
-
-    console.log("✅ SAVED USER:", JSON.parse(localStorage.getItem("user")));
-
-    alert("Login successful ✅");
-    window.location.href = "/chat";
-  } catch (error) {
-    console.error("❌ LOGIN ERROR:", error.response?.data || error.message);
-    alert(error.response?.data?.message || "Login failed");
-  }
-};
-
+    setLoading(false);
+  };
 
   return (
     <div className="auth-bg">
@@ -89,7 +85,7 @@ const Login = ({ onSwitch }) => {
 
           <p className="link-text">
             No account?{" "}
-            <a onClick={onSwitch} style={{ cursor: "pointer" }}>
+            <a style={{ cursor: "pointer" }} onClick={() => navigate("/register")}>
               Create one
             </a>
           </p>

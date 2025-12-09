@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
-const Register = ({ onSwitch }) => {
+const Register = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,16 +19,11 @@ const Register = ({ onSwitch }) => {
     e.preventDefault();
 
     try {
-      const res = await API.post("/auth/register", formData);
+      await API.post("/auth/register", formData);
 
-      alert("Registration successful ✅ Now login");
-      console.log("Registered User:", res.data);
-
-      // ✅ Switch to Login after successful register
-      onSwitch();
-
+      alert("Registration successful! Please login.");
+      navigate("/");
     } catch (error) {
-      console.error(error.response?.data?.message);
       alert(error.response?.data?.message || "Registration failed");
     }
   };
@@ -75,7 +73,7 @@ const Register = ({ onSwitch }) => {
 
           <p className="link-text">
             Already have an account?{" "}
-            <a onClick={onSwitch} style={{ cursor: "pointer" }}>
+            <a style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
               Login
             </a>
           </p>
