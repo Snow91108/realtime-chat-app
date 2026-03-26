@@ -25,14 +25,16 @@
 
 | Feature | Description |
 |---|---|
-| 🔐 **Authentication** | Secure JWT-based register & login |
+| 🔐 **Authentication** | Secure JWT-based register & login with modern validation |
 | 💬 **Private Messaging** | One-to-one real-time chat via Socket.IO rooms |
 | 📁 **File Sharing** | Upload and share images, PDFs, and other files |
 | 📡 **Online Presence** | Live online/offline user status indicators |
-| ✍️ **Typing Indicators** | Real-time "user is typing…" notifications |
-| ✅ **Message Status** | Sent → Delivered → Seen tick tracking |
+| ✍️ **Typing Indicators** | Real-time "user is typing…" bouncing dot animations |
+| ✅ **Message Status** | Sent → Delivered → Seen tick tracking (Single/Double ticks) |
 | 📞 **Audio Calling** | Peer-to-peer audio calls via WebRTC (simple-peer) |
-| 🎥 **Video Calling** | Peer-to-peer video calls via WebRTC (simple-peer) |
+| 🎥 **Video Calling** | Peer-to-peer video calls with Picture-in-Picture layout |
+| 🎨 **Modern UI** | Highly responsive Glassmorphism design inspired by WhatsApp & Slack |
+| 🌓 **Dark Mode** | Seamless Light/Dark theme toggle with automatic system preference detection |
 | 🛡️ **Protected Routes** | Chat page is only accessible to authenticated users |
 
 ---
@@ -43,6 +45,7 @@
 | Layer | Technology |
 |---|---|
 | Framework | React 19 (Vite) |
+| Styling | Tailwind CSS v3 |
 | Routing | React Router DOM v7 |
 | HTTP Client | Axios |
 | Realtime | Socket.IO Client v4 |
@@ -135,9 +138,19 @@ realtime-chat-app/
 │   ├── src/
 │   │   ├── pages/
 │   │   │   ├── AuthPage.jsx         # Auth layout wrapper
-│   │   │   ├── Login.jsx            # Login form
-│   │   │   ├── Register.jsx         # Registration form
-│   │   │   └── Chat.jsx             # Main chat interface (messages, calls)
+│   │   │   ├── Login.jsx            # Glassmorphism login form
+│   │   │   ├── Register.jsx         # Glassmorphism registration form
+│   │   │   └── Chat.jsx             # Main logic container
+│   │   ├── components/              # Reusable UI components
+│   │   │   ├── ChatLayout.jsx       # Main layout orchestrator
+│   │   │   ├── Sidebar.jsx          # Contact list & drawer
+│   │   │   ├── ChatHeader.jsx       # Sticky contact header
+│   │   │   ├── MessageBubble.jsx    # Chat bubbles & file previews
+│   │   │   ├── MessageInput.jsx     # Auto-growing textarea & actions
+│   │   │   ├── CallModal.jsx        # WebRTC call overlay
+│   │   │   ├── ThemeToggle.jsx      # Dark/Light mode switch
+│   │   │   ├── Toast.jsx            # Notifications
+│   │   │   └── Icons.jsx            # Zero-dependency SVG icons
 │   │   ├── routes/
 │   │   │   └── ProtectedRoute.jsx   # JWT-guarded route wrapper
 │   │   ├── services/
@@ -146,8 +159,8 @@ realtime-chat-app/
 │   │   ├── types/                   # JSDoc / type definitions
 │   │   ├── App.jsx                  # Root router
 │   │   ├── main.jsx                 # React entry point
-│   │   ├── index.css                # Global styles
-│   │   └── auth.css                 # Auth page styles
+│   │   ├── index.css                # Global styles & Tailwind directives
+│   │   └── auth.css                 # Legacy auth styles
 │   ├── vite.config.js
 │   ├── vitest.config.js
 │   ├── cypress.config.js
@@ -417,7 +430,7 @@ npx cypress run     # Headless mode
 - [ ] Group chat rooms
 - [ ] Message reactions (emoji)
 - [ ] Push notifications
-- [ ] Dark / Light theme toggle
+- [x] Dark / Light theme toggle
 - [ ] Message search
 - [ ] Read receipts for group chats
 - [ ] Docker Compose setup for one-command deployment
